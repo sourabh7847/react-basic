@@ -14,6 +14,9 @@ function App() {
   //   // console.log("value added", counter);
 
   //   setCount(count + 1);
+  //   setCount(count + 1);
+  //   setCount(count + 1);
+  //   setCount(count + 1);
   // };
   // const decValue = () => {
   //   // console.log("value added", counter);
