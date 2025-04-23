@@ -4,10 +4,12 @@ import "./App.css";
 function App() {
   const [item, setItem] = useState("");
   const [list, setList] = useState([]);
+  const [modifedList, setModifedList] = useState([]);
   const addItemToList = () => {
     setList([...list, item]);
     setItem("");
   };
+  const [searchItem, setSearchItem] = useState("");
 
   const [editingItemIndex, setEditingItemIndex] =
     useState(null);
@@ -28,13 +30,49 @@ function App() {
     setEditingItemIndex(null);
     setEditingItemDetails("");
   };
+  const handelSearch = () => {
+    const filteredList = list.filter((item, idx) =>
+      item.includes(searchItem)
+    );
+    setModifedList(filteredList);
+  };
+
+  const finalList =
+    modifedList.length > 0 ? modifedList : list;
+
   return (
     <>
+      <div>
+        <input
+          onChange={(e) => setSearchItem(e.target.value)}
+          type="text"
+          className="shadow rounded-lg overflow-hidden mb-8 outline-none py-1 px-3 "
+        />
+        <button
+          className="ml-2"
+          onClick={() => handelSearch()}
+        >
+          Search
+        </button>
+        {searchItem.length > 0 && (
+          <button
+            className="ml-2"
+            onClick={() => setModifedList([])}
+          >
+            Clear
+          </button>
+        )}
+      </div>
       <div className="flex  shadow rounded-lg overflow-hidden mb-4 ">
         <input
           onChange={(e) => setItem(e.target.value)}
           value={item}
           type="text"
+          onKeyDown={(e) => {
+            if (e.key == "Enter") {
+              addItemToList();
+            }
+          }}
           className="outline-none w-full py-1 px-3 bg-white"
         />
         <button
@@ -45,8 +83,10 @@ function App() {
         </button>
       </div>
       <div>
-        <p className="mb-2">Items in List: {list.length}</p>
-        {list.map((val, idx) => {
+        <p className="mb-2">
+          Items in finalList: {finalList.length}
+        </p>
+        {finalList.map((val, idx) => {
           if (idx == editingItemIndex) {
             return (
               <div
