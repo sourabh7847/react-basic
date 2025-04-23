@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
@@ -36,6 +36,10 @@ function App() {
     );
     setModifedList(filteredList);
   };
+
+  useEffect(() => {
+    handelSearch();
+  }, [searchItem]);
 
   const finalList =
     modifedList.length > 0 ? modifedList : list;
